@@ -1,0 +1,73 @@
+<form action='' method='POST' enctype="multipart/form-data">
+	{% csrf_token %}
+	<div class="form-group">
+		<label for="exampleInputEmail1">
+			<span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+			Subject
+		</label>
+		<input type="text" name='subject' class="form-control" id="exampleInputEmail1" value='{{ notes.subject }}'>
+	</div>
+	<div class="form-group">
+		<label for="exampleInputPassword1">
+			<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+			Message
+		</label>
+		<textarea name='message' class="form-control" rows="3">{{ notes.message }}</textarea>
+	</div>
+	<div class="form-group">
+		<label for="inputEmail3">
+			<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+			Category
+		</label>
+		<select name='cat' class="form-control">
+		{% for cat in categorys %}
+			<option value='{{ cat.id }}'>{{ cat.category_name }}</option>
+		{% endfor %}
+		</select>
+	</div>
+	<div class="form-group">
+		<label for="inputEmail3">
+			<span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+			Tags
+		</label>
+		<br>
+		{% for tag in tags %}
+			<label>
+			{% if tag.id in notes.id_tag %}
+				<input type="checkbox" checked="checked" name='tag_ch' value="{{ tag.id }}">						
+			{% else %}
+				<input type="checkbox" name='tag_ch' value="{{ tag.id }}">
+			{% endif %}				
+			{{ tag.tag_name }}
+			</label>
+		{% endfor %}		
+	</div>	
+	<div class="form-group">
+		<label for="inputEmail3">
+			<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+			Color
+		</label>
+		<select name='color' class="form-control">
+		{% for color in colors %}
+			<option value='{{ color.id }}'>{{ color.color_name }}</option>
+		{% endfor %}
+		</select>
+	</div>
+	<div class="form-group">
+		<label for="exampleInputFile">
+			<span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
+			File
+		</label>
+		<input type="file" name='file_load' id="exampleInputFile">
+		<p>You need to browse some file</p>
+	</div>	
+	<a href="{% url 'index' %}" class='btn btn-default'>
+		<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+		Back
+	</a>
+	<button type="submit" class="btn btn-primary">
+		<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+		Submit
+	</button>
+	</form>
+</div>

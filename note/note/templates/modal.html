@@ -1,0 +1,240 @@
+<!-- Modal Add New Tag-->
+<div class="modal fade " id="tag_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		    <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Add new tag</h4>
+		    </div>
+		    <div class="modal-body">
+		        <form class="form-horizontal" action='' method='POST'>
+					{% csrf_token %}
+					<div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+					    <div class="col-sm-10">
+					    	<input type="text" name='tag_name' class="form-control" id="inputEmail3" placeholder="Tag name">
+					    </div>
+					</div>					
+		    </div>
+		    <div class="modal-footer">
+		    	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="submit" class="btn btn-primary">Save changes</button>
+		    </div>
+		      	</form>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal Add New Tag-->
+<div class="modal fade " id="color_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		    <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Add new color</h4>
+		    </div>
+		    <div class="modal-body">
+		        <form class="form-horizontal" action='' method='POST'>
+					{% csrf_token %}
+					<div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+					    <div class="col-sm-10">
+					    	<input type="text" name='color_name' class="form-control" id="inputEmail3" placeholder="Color name">
+					    </div>
+					</div>
+					<div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Hex</label>
+					    <div class="col-sm-10">
+					    	<input type="text" name='hex' class="form-control" id="inputEmail3" placeholder="primary / info / bootstrap color">
+					    </div>
+					</div>						
+		    </div>
+		    <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="submit" class="btn btn-primary">Save changes</button>
+		    </div>
+		      	</form>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal Add New Category-->
+<div class="modal fade " id="cat_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		    <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Add new category</h4>
+		    </div>
+		    <div class="modal-body">
+		        <form class="form-horizontal" action='' method='POST'>
+					{% csrf_token %}
+					<div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+					    <div class="col-sm-10">
+					      	<input type="text" name='cat_name' class="form-control" id="inputEmail3" placeholder="Category name">
+					    </div>
+					</div>						
+		    </div>
+		    <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="submit" class="btn btn-primary">Save changes</button>
+		    </div>
+		      	</form>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal Add New Note-->
+<div class="modal fade " id="note_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		    <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Add new note</h4>
+		    </div>
+		    <div class="modal-body">
+		        <form class="form-horizontal" action='' method='POST' enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Subject</label>
+					    <div class="col-sm-10">
+					      	<input type="text" name='subject' class="form-control" id="inputEmail3" placeholder="Subject">
+					    </div>
+					</div>		
+					<div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Message</label>
+					    <div class="col-sm-10">
+					      	<textarea name='message' placeholder='Message' class="form-control" rows="3"></textarea>
+					    </div>
+					</div>	
+					<div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Category</label>
+					    <div class="col-sm-10">
+					      	<select name='cat' class="form-control">
+					      {% for cat in categorys %}
+							  	<option value='{{ cat.id }}'>{{ cat.category_name }}</option>
+					      {% endfor %}
+							</select>
+					    </div>
+					</div>	
+					<div class="form-group">
+					  	<label for="inputEmail3" class="col-sm-2 control-label">Tags</label>
+					    <div class="checkbox col-sm-10">
+					    {% for tag in tags %}
+						  <label>
+						    	<input type="checkbox" name='tag_ch' value="{{ tag.id }}">
+						    	{{ tag.tag_name }}
+						  </label>
+						{% endfor %}	
+						</div>	
+					</div>	
+					<div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Color</label>
+					    <div class="col-sm-10">
+					      	<select name='color' class="form-control">
+					      {% for color in colors %}
+							  	<option value='{{ color.id }}'>{{ color.color_name }}</option>
+					      {% endfor %}
+							</select>
+					    </div>
+					</div>
+					<div class="form-group">
+					    <label for="exampleInputFile" class="col-sm-2 control-label">File</label>
+					    <input type="file" name='file_load' id="exampleInputFile" class="col-sm-10">
+					    <p class="help-block col-sm-10">You need to browse some file</p>
+					</div>					  
+		    </div>
+		    <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="submit" class="btn btn-primary">Save changes</button>
+		    </div>
+		      	</form>
+		</div>
+	</div>
+</div>
+
+<!-- Share Tag-->
+<div class="modal fade " id="share_tag" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		    <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Share my tag</h4>
+		    </div>
+		    <div class="modal-body">
+		        <form class="form-horizontal" action='' method='POST'>
+					{% csrf_token %}
+					<div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Tags</label>
+					    <div class="col-sm-10">
+					      	<select name='share_tag' class="form-control">
+					      {% for tag in tags %}
+							  	<option value='{{ tag.tag_name }}'>{{ tag.tag_name }}</option>
+					      {% endfor %}
+							</select>
+					    </div>
+					</div>
+					<div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Users</label>
+					    <div class="col-sm-10">
+					      	<select name='share' class="form-control">
+					      {% for user in users %}
+							  	<option value='{{ user.id }}'>{{ user.email }}</option>
+					      {% endfor %}
+							</select>
+					    </div>
+					</div>							
+		    </div>
+		    <div class="modal-footer">
+		    	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="submit" class="btn btn-primary">Share</button>
+		    </div>
+		      	</form>
+		</div>
+	</div>
+</div>
+
+<!-- Share Category-->
+<div class="modal fade " id="share_cat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		    <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Share my category</h4>
+		    </div>
+		    <div class="modal-body">
+		        <form class="form-horizontal" action='' method='POST'>
+					{% csrf_token %}
+					<div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Category</label>
+					    <div class="col-sm-10">
+					      	<select name='share_cat' class="form-control">
+					      {% for cat in categorys %}
+							  	<option value='{{ cat.category_name }}'>{{ cat.category_name }}</option>
+					      {% endfor %}
+							</select>
+					    </div>
+					</div>
+					<div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Users</label>
+					    <div class="col-sm-10">
+					      	<select name='share' class="form-control">
+					      {% for user in users %}
+							  	<option value='{{ user.id }}'>{{ user.email }}</option>
+					      {% endfor %}
+							</select>
+					    </div>
+					</div>							
+		    </div>
+		    <div class="modal-footer">
+		    	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="submit" class="btn btn-primary">Share</button>
+		    </div>
+		      	</form>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,15 @@
+{% extends "__base.html" %}
+
+{% block content %}
+
+{% if session == 'False' %}
+
+{% include "login.html" %}
+
+{% else %}
+
+{% include "__index.html" %}
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,47 @@
+<div class="list-group">
+	<span class="list-group-item active">
+		<span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
+		Personal area
+	</span>
+	<a href="#" class="list-group-item" data-toggle="modal" data-target="#tag_add">
+		<span class="badge">{{ tags|length }}</span>
+		<span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>
+		Add new tag
+	</a>
+	<a href="#" class="list-group-item" data-toggle="modal" data-target="#color_add">
+		<span class="badge">{{ colors|length }}</span>
+		<span class="glyphicon glyphicon-link" aria-hidden="true"></span>
+		Add new color
+	</a>
+	<a href="#" class="list-group-item" data-toggle="modal" data-target="#cat_add">
+		<span class="badge">{{ categorys|length }}</span>
+		<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+		Add new category
+	</a>
+	<a href="#" class="list-group-item" data-toggle="modal" data-target="#note_add">
+		<span class="badge">{{ notes|length }}</span>
+		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+		Add new note
+	</a>
+	<a class="list-group-item" role='button' data-toggle="collapse" href="#share" aria-expanded="false" aria-controls="share">
+		<span class="glyphicon glyphicon-random" aria-hidden="true"></span>
+		Share
+	</a>
+	<!-- Collapse Share -->
+	<div class="collapse" id="share">
+	  	<a href="#" class="list-group-item" data-toggle="modal" data-target="#share_tag">
+			<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+			Share tag
+		</a>
+		<a href="#" class="list-group-item" data-toggle="modal" data-target="#share_cat">
+			<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+			Share category
+		</a>
+	</div>
+	<a href="/logout" class="list-group-item">
+		<span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+		Log out
+	</a>
+</div>
+
+

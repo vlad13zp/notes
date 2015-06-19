@@ -1,0 +1,259 @@
+{% extends "__base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-3">
+			<div class="list-group">
+			  <span class="list-group-item active">
+			  	<span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
+			    Personal area
+			  </span>
+			  <a href="#" class="list-group-item" data-toggle="modal" data-target="#tag_add">
+			  	<span class="badge">{{ tags|length }}</span>
+			  	<span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>
+			  	Add new tag
+			  </a>
+			  <a href="#" class="list-group-item" data-toggle="modal" data-target="#color_add">
+			  	<span class="badge">{{ colors|length }}</span>
+			  	<span class="glyphicon glyphicon-link" aria-hidden="true"></span>
+			  	Add new color
+			  </a>
+			  <a href="#" class="list-group-item" data-toggle="modal" data-target="#cat_add">
+			  	<span class="badge">{{ categorys|length }}</span>
+			  	<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+			  	Add new category
+			  </a>
+			  <a href="#" class="list-group-item" data-toggle="modal" data-target="#note_add">
+			  	<span class="badge">{{ notes|length }}</span>
+			  	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+			  	Add new note
+			  </a>
+			  <a href="/logout" class="list-group-item">
+			  	<span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+			  	Log out
+			  </a>
+			</div>
+		</div>
+		<div class="col-lg-9">
+			{% if notes %}
+			{% for note in notes %}
+				{% for color in colors %}
+					{% if color.id == note.id_color %}
+					<div class="panel panel-{{ color.hex_stat }}">
+					{% endif %}
+				{% endfor %}
+			  <!-- Default panel contents -->
+			  <div class="panel-heading">
+			  	{{ note.subject }} ( {{ note.date_create }} )
+			  <div class="pull-right">
+			  	{% for tag in note.id_tag %}
+			  		{% for tag_m in tags %}
+			  			{% if tag_m.id == tag %}
+			  				<span class="label label-primary">{{ tag_m.tag_name }}</span>
+			  			{% endif %}
+			  		{% endfor %}
+			  	{% endfor %}
+			  </div>
+			  </div>
+			  <div class="panel-body">
+			    <p> {{ note.message }}</p>
+			    <hr>
+			    <p>
+			    	<a href="{{ note.files }}">
+			    		<span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+			    		Download file
+			    	</a>
+			    	<span> / </span>
+			    	<a href="/edit/{{ note.id }}">
+			    		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+			    		Edit note
+			    	</a>
+			    	<span> / </span>
+			    	<a href="/delete/{{ note.id }}">
+			    		<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+			    		Delete note
+			    	</a>
+			    	<span class='pull-right text-info'>
+			    		Category :
+			    		<a href="/cat/{{ note.id_category }}">
+			    			{% for cat in categorys %}
+			    				{% if cat.id == note.id_category %}
+			    					{{ cat.category_name }}
+			    				{% endif %}
+			    			{% endfor %}
+			    		</a>
+			    	</span>
+			    </p>
+			  </div>
+			</div>
+			{% endfor %}
+			{% else %}
+			<div class="alert alert-warning" role="alert">
+				<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+				Your list of notes is empty
+			</div>
+			{% endif %}
+
+		<!-- Modal Add New Tag-->
+		<div class="modal fade " id="tag_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Add new tag</h4>
+		      </div>
+		      <div class="modal-body">
+		        <form class="form-horizontal" action='' method='POST'>
+					{% csrf_token %}
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+					    <div class="col-sm-10">
+					      <input type="text" name='tag_name' class="form-control" id="inputEmail3" placeholder="Tag name">
+					    </div>
+					  </div>					
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="submit" class="btn btn-primary">Save changes</button>
+		      </div>
+		      </form>
+		    </div>
+		  </div>
+		</div>
+
+		<!-- Modal Add New Tag-->
+		<div class="modal fade " id="color_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Add new color</h4>
+		      </div>
+		      <div class="modal-body">
+		        <form class="form-horizontal" action='' method='POST'>
+					{% csrf_token %}
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+					    <div class="col-sm-10">
+					      <input type="text" name='color_name' class="form-control" id="inputEmail3" placeholder="Color name">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Hex</label>
+					    <div class="col-sm-10">
+					      <input type="text" name='hex' class="form-control" id="inputEmail3" placeholder="primary / info / bootstrap color">
+					    </div>
+					  </div>						
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="submit" class="btn btn-primary">Save changes</button>
+		      </div>
+		      </form>
+		    </div>
+		  </div>
+		</div>
+
+		<!-- Modal Add New Category-->
+		<div class="modal fade " id="cat_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Add new category</h4>
+		      </div>
+		      <div class="modal-body">
+		        <form class="form-horizontal" action='' method='POST'>
+					{% csrf_token %}
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+					    <div class="col-sm-10">
+					      <input type="text" name='cat_name' class="form-control" id="inputEmail3" placeholder="Category name">
+					    </div>
+					  </div>						
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="submit" class="btn btn-primary">Save changes</button>
+		      </div>
+		      </form>
+		    </div>
+		  </div>
+		</div>
+
+		<!-- Modal Add New Note-->
+		<div class="modal fade " id="note_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Add new note</h4>
+		      </div>
+		      <div class="modal-body">
+		        <form class="form-horizontal" action='' method='POST' enctype="multipart/form-data">
+					{% csrf_token %}
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Subject</label>
+					    <div class="col-sm-10">
+					      <input type="text" name='subject' class="form-control" id="inputEmail3" placeholder="Subject">
+					    </div>
+					  </div>		
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Message</label>
+					    <div class="col-sm-10">
+					      <textarea name='message' placeholder='Message' class="form-control" rows="3"></textarea>
+					    </div>
+					  </div>	
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Category</label>
+					    <div class="col-sm-10">
+					      <select name='cat' class="form-control">
+					      {% for cat in categorys %}
+							  <option value='{{ cat.id }}'>{{ cat.category_name }}</option>
+					      {% endfor %}
+							</select>
+					    </div>
+					  </div>	
+					  <div class="form-group">
+					  	<label for="inputEmail3" class="col-sm-2 control-label">Tags</label>
+					    <div class="checkbox col-sm-10">
+					    {% for tag in tags %}
+						  <label>
+						    <input type="checkbox" name='tag_ch' value="{{ tag.id }}">
+						    {{ tag.tag_name }}
+						  </label>
+						{% endfor %}	
+						</div>	
+					  </div>	
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-2 control-label">Color</label>
+					    <div class="col-sm-10">
+					      <select name='color' class="form-control">
+					      {% for color in colors %}
+							  <option value='{{ color.id }}'>{{ color.color_name }}</option>
+					      {% endfor %}
+							</select>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="exampleInputFile" class="col-sm-2 control-label">File</label>
+					    <input type="file" name='file' id="exampleInputFile" class="col-sm-10">
+					    <p class="help-block col-sm-10">You need to browse some file</p>
+					  </div>					  
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="submit" class="btn btn-primary">Save changes</button>
+		      </div>
+		      </form>
+		    </div>
+		  </div>
+		</div>
+
+		</div>
+	</div>
+</div>
+
+{% endblock %}
